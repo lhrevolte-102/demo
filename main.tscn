@@ -1,0 +1,121 @@
+[gd_scene load_steps=8 format=3 uid="uid://bre6iko5fsj3b"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_je6my"]
+
+[sub_resource type="Theme" id="Theme_rwpg3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rbyuc"]
+bg_color = Color(0.360784, 0.662745, 0.639216, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q7i2t"]
+bg_color = Color(0.611765, 0.560784, 0.796078, 1)
+
+[sub_resource type="Animation" id="Animation_e51nh"]
+length = 0.5
+
+[sub_resource type="Animation" id="Animation_wjh5n"]
+resource_name = "expan"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer/VBoxContainer/PanelContainer/HBoxContainer/Panel:custom_minimum_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(200, 200), Vector2(1000, 200)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v8ipf"]
+_data = {
+"RESET": SubResource("Animation_e51nh"),
+"expand": SubResource("Animation_wjh5n")
+}
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_je6my")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_rwpg3")
+theme_override_colors/font_color = Color(0.643137, 0.968627, 0.94902, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0.941176, 1)
+theme_override_colors/font_outline_color = Color(0, 0.701961, 0, 1)
+theme_override_constants/shadow_offset_x = 7
+theme_override_font_sizes/font_size = 36
+text = "This is a title label"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 2.08165e-12)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.854902, 0.572549, 0.803922, 1)
+theme_override_colors/font_pressed_color = Color(0.827451, 0.380392, 0.196078, 1)
+theme_override_colors/font_hover_color = Color(0.847059, 0.627451, 0.603922, 1)
+theme_override_colors/font_focus_color = Color(0.423529, 0.635294, 0.862745, 1)
+text = "This is a button"
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.901961, 0.901961, 0.901961, 1)
+text = "Pick a color"
+
+[node name="Button2" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Expand"
+
+[node name="Button3" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Narrow"
+
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(1000, 200)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_rbyuc")
+
+[node name="Panel2" type="Panel" parent="PanelContainer/VBoxContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_q7i2t")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_v8ipf")
+}
+
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/Button3" to="." method="_on_button_3_pressed"]
